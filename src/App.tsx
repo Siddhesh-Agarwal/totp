@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AdvancedOptions } from './components/AdvancedOptions'
 import { CodeDisplay } from './components/CodeDisplay'
 import { SecretInput } from './components/SecretInput'
@@ -9,7 +9,7 @@ import { normalizeSecret, type TotpOptions } from './lib/totp'
 function App() {
   const [secretInput, setSecretInput] = useState('')
   const [options, setOptions] = useState<TotpOptions>(loadStoredOptions)
-  const secret = useMemo(() => normalizeSecret(secretInput), [secretInput])
+  const secret = normalizeSecret(secretInput)
   const clock = useTotpClock(secret.normalized, options)
 
   useEffect(() => {
@@ -23,13 +23,15 @@ function App() {
           <h1 className="font-mono text-sm font-semibold uppercase tracking-[0.18em]">
             TOTP Generator
           </h1>
-          <span className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">
-            <span
-              className="size-1.5 rounded-full bg-emerald-500"
-              aria-hidden="true"
-            />
-            Local only
-          </span>
+          <a href="https://github.com/Siddhesh-Agarwal/totp" target="_blank" rel="noopener noreferrer">
+            <span className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">
+              <span
+                className="size-1.5 rounded-full bg-emerald-500"
+                aria-hidden="true"
+              />
+              GitHub
+            </span>
+          </a>
         </header>
 
         <main className="flex-1 py-10 sm:py-14">
@@ -44,14 +46,16 @@ function App() {
               error={secret.error}
             />
 
-            <CodeDisplay
-              code={clock.code}
-              digits={options.digits}
-              secondsLeft={clock.secondsLeft}
-              progress={clock.progress}
-              isWarning={clock.isWarning}
-              isCritical={clock.isCritical}
-            />
+            {secretInput !== "" && (
+              <CodeDisplay
+                code={clock.code}
+                digits={options.digits}
+                secondsLeft={clock.secondsLeft}
+                progress={clock.progress}
+                isWarning={clock.isWarning}
+                isCritical={clock.isCritical}
+              />
+            )}
 
             <AdvancedOptions options={options} onChange={setOptions} />
           </section>
