@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://totp.siddhesh.cc/sitemap.xml

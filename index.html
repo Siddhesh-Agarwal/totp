@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <title>TOTP Generator — Free Two-Factor Codes in Your Browser</title>
+    <meta
+      name="description"
+      content="Generate time-based one-time passwords (TOTP) in your browser. Paste a Base32 secret and choose digits, time interval, and SHA algorithm. Nothing leaves your device."
+    />
+    <meta name="application-name" content="TOTP Generator" />
+    <meta name="apple-mobile-web-app-title" content="TOTP Generator" />
+    <meta name="author" content="Siddhesh Agarwal" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="robots" content="index, follow" />
+    <meta
+      name="keywords"
+      content="TOTP generator, two-factor authentication, 2FA, one-time password, RFC 6238"
+    />
+    <link rel="canonical" href="https://totp.siddhesh.cc/" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta
+      name="theme-color"
+      content="#0a0a0a"
+      media="(prefers-color-scheme: dark)"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://totp.siddhesh.cc/" />
+    <meta property="og:site_name" content="TOTP Generator" />
+    <meta
+      property="og:title"
+      content="TOTP Generator — Free Two-Factor Codes in Your Browser"
+    />
+    <meta
+      property="og:description"
+      content="Paste a Base32 secret and get the current TOTP code. Choose digits, interval, and SHA algorithm. Everything stays in your browser."
+    />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@siddheshdotcc" />
+    <meta name="twitter:creator" content="@siddheshdotcc" />
+    <meta
+      name="twitter:title"
+      content="TOTP Generator — Free Two-Factor Codes in Your Browser"
+    />
+    <meta
+      name="twitter:description"
+      content="Paste a Base32 secret and get the current TOTP code. Choose digits, interval, and SHA algorithm. Everything stays in your browser."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "TOTP Generator",
+        "url": "https://totp.siddhesh.cc/",
+        "description": "Generate time-based one-time passwords (TOTP) in your browser. Paste a Base32 secret and choose digits, time interval, and SHA algorithm. Nothing leaves your device.",
+        "applicationCategory": "SecurityApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript and a modern browser",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "author": {
+          "@type": "Person",
+          "name": "Siddhesh Agarwal",
+          "sameAs": ["https://x.com/siddheshdotcc"]
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "featureList": [
+          "RFC 6238 TOTP generation",
+          "6, 7, or 8 digit codes",
+          "30- or 60-second intervals",
+          "SHA-1, SHA-256, or SHA-512",
+          "Runs locally in the browser"
+        ]
+      }
+    </script>
+  </head>
+  <body class="bg-white dark:bg-neutral-950">
+    <div id="root"></div>
+    <noscript>
+      This TOTP generator needs JavaScript to create codes locally in your
+      browser.
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
