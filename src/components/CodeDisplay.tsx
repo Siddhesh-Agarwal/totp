@@ -3,6 +3,7 @@ import { formatCode, type Digits } from '../lib/totp'
 
 interface CodeDisplayProps {
   code: string | null
+  nextCode: string | null
   digits: Digits
   secondsLeft: number
   progress: number
@@ -102,6 +103,7 @@ function CountdownRing({
 
 export function CodeDisplay({
   code,
+  nextCode,
   digits,
   secondsLeft,
   progress,
@@ -112,6 +114,7 @@ export function CodeDisplay({
   const resetTimer = useRef<number | null>(null)
   const isIdle = code === null
   const displayCode = code ?? '•'.repeat(digits)
+  const displayNextCode = nextCode ?? '•'.repeat(digits)
 
   const statusColor = isIdle
     ? 'text-neutral-400 dark:text-neutral-500'
@@ -161,13 +164,15 @@ export function CodeDisplay({
       </p>
 
       <div className="mt-2 flex items-center justify-between gap-4">
-        <div
-          className="min-w-0"
-          role="group"
+        <button
+          type="button"
+          className="-mx-1 -my-1 min-w-0 cursor-pointer rounded-md bg-transparent px-1 py-1 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2 disabled:cursor-default dark:focus-visible:ring-neutral-100 dark:focus-visible:ring-offset-neutral-950"
+          onClick={copyCode}
+          disabled={isIdle}
           aria-label={
             code === null
               ? 'Current code unavailable'
-              : `Current code ${code.split('').join(' ')}`
+              : `Copy current code ${code.split('').join(' ')}`
           }
         >
           <span
@@ -183,7 +188,7 @@ export function CodeDisplay({
           <span className="sr-only">
             {code === null ? 'No code generated yet.' : `Current code: ${code}`}
           </span>
-        </div>
+        </button>
 
         <CountdownRing
           secondsLeft={secondsLeft}
@@ -194,10 +199,56 @@ export function CodeDisplay({
         />
       </div>
 
+      <div
+        className="mt-3 flex items-baseline gap-2.5"
+        role="group"
+        aria-label={
+          nextCode === null
+            ? 'Next code unavailable'
+            : `Next code ${nextCode.split('').join(' ')}`
+        }
+      >
+        <span
+          aria-hidden="true"
+          className="font-mono text-[10px] font-medium uppercase tracking-[0.18em] text-neutral-400 dark:text-neutral-500"
+        >
+          Next
+        </span>
+        <span
+          aria-hidden="true"
+          className={`font-mono text-base tabular-nums ${
+            isIdle
+              ? 'text-neutral-300 dark:text-neutral-700'
+              : 'text-neutral-500 dark:text-neutral-400'
+          }`}
+        >
+          {formatCode(displayNextCode)}
+        </span>
+      </div>
+
       <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
+        {!isIdle && (
+          <p
+            aria-hidden="true"
+            className={`font-mono text-[10px] uppercase tracking-[0.08em] sm:hidden ${
+              copyStatus === 'copied'
+                ? 'text-emerald-600 dark:text-emerald-400'
+                : copyStatus === 'failed'
+                  ? 'text-red-600 dark:text-red-400'
+                  : 'text-neutral-500 dark:text-neutral-400'
+            }`}
+          >
+            {copyStatus === 'copied'
+              ? 'Copied'
+              : copyStatus === 'failed'
+                ? 'Copy failed'
+                : 'Tap to copy'}
+          </p>
+        )}
+
         <button
           type="button"
-          className="inline-flex min-h-11 items-center gap-2 rounded-md bg-neutral-900 px-3.5 text-xs font-medium text-white transition-colors hover:bg-neutral-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300 dark:focus-visible:ring-neutral-100 dark:focus-visible:ring-offset-neutral-950"
+          className="hidden min-h-11 items-center gap-2 rounded-md bg-neutral-900 px-3.5 text-xs font-medium text-white transition-colors hover:bg-neutral-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40 sm:inline-flex dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300 dark:focus-visible:ring-neutral-100 dark:focus-visible:ring-offset-neutral-950"
           onClick={copyCode}
           disabled={isIdle}
         >

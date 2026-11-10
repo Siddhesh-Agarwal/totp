@@ -4,8 +4,10 @@ A browser-only time-based one-time password (TOTP) generator, deployed at
 [totp.siddhesh.cc](https://totp.siddhesh.cc/).
 
 Paste a Base32 setup key and the current RFC 6238 code appears immediately. The
-code refreshes on its own with a visible countdown. Advanced options cover 6, 7,
-or 8 digits, 30- or 60-second intervals, and SHA-1, SHA-256, or SHA-512.
+code refreshes on its own with a visible countdown, and the next code is shown
+beneath it. On phones, tap the current code to copy it; larger screens also get
+a copy button. Advanced options cover 6, 7, or 8 digits, 30- or 60-second
+intervals, and SHA-1, SHA-256, or SHA-512.
 
 Secrets are processed entirely in the browser. They are never sent to a server,
 logged, placed in the URL, or saved to storage. Only the advanced display

@@ -56,6 +56,7 @@ function App() {
             {secretInput !== "" && (
               <CodeDisplay
                 code={clock.code}
+                nextCode={clock.nextCode}
                 digits={options.digits}
                 secondsLeft={clock.secondsLeft}
                 progress={clock.progress}

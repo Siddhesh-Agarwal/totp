@@ -2,6 +2,7 @@ import { generateCode, getCounter, getRemainingMs, type TotpOptions } from './to
 
 export interface ClockState {
   code: string | null
+  nextCode: string | null
   secondsLeft: number
   progress: number
   isWarning: boolean
@@ -20,6 +21,9 @@ export function computeClock(
   return {
     code: secret
       ? generateCode(secret, options, counter * options.period * 1000)
+      : null,
+    nextCode: secret
+      ? generateCode(secret, options, (counter + 1) * options.period * 1000)
       : null,
     secondsLeft,
     progress: remainingMs / (options.period * 1000),
