@@ -70,7 +70,13 @@ function App() {
         </main>
 
         <footer className="flex flex-wrap items-center justify-between gap-2 border-t border-neutral-200 pt-4 font-mono text-[10px] uppercase tracking-[0.12em] text-neutral-400 dark:border-neutral-800 dark:text-neutral-500">
-          <p>RFC 6238</p>
+          <a
+            href="https://www.rfc-editor.org/info/rfc6238/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            RFC 6238
+          </a>
           <p>Secrets stay in this tab</p>
         </footer>
       </div>
