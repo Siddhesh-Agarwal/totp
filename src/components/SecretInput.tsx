@@ -1,19 +1,19 @@
-import { useId, useRef, useState } from 'react'
+import { useId, useRef, useState } from "react";
 
 interface SecretInputProps {
-  value: string
-  onChange: (value: string) => void
-  error: string | null
+  value: string;
+  onChange: (value: string) => void;
+  error: string | null;
 }
 
 const iconButtonClasses =
-  'grid size-11 shrink-0 place-items-center rounded-md text-neutral-400 transition-colors hover:bg-neutral-100 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 dark:hover:bg-neutral-800 dark:hover:text-neutral-100 dark:focus-visible:ring-neutral-100'
+  "grid size-11 shrink-0 place-items-center rounded-md text-neutral-400 transition-colors hover:bg-neutral-100 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 dark:hover:bg-neutral-800 dark:hover:text-neutral-100 dark:focus-visible:ring-neutral-100";
 
 export function SecretInput({ value, onChange, error }: SecretInputProps) {
-  const inputId = useId()
-  const descriptionId = useId()
-  const inputRef = useRef<HTMLInputElement>(null)
-  const [visible, setVisible] = useState(false)
+  const inputId = useId();
+  const descriptionId = useId();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [visible, setVisible] = useState(false);
 
   return (
     <div>
@@ -32,14 +32,14 @@ export function SecretInput({ value, onChange, error }: SecretInputProps) {
       <div
         className={`mt-2 flex items-center gap-1 rounded-lg border bg-white px-2 py-1 transition focus-within:ring-2 dark:bg-neutral-900 ${
           error
-            ? 'border-red-500 focus-within:ring-red-500/10 dark:border-red-500'
-            : 'border-neutral-300 focus-within:border-neutral-900 focus-within:ring-neutral-900/10 dark:border-neutral-700 dark:focus-within:border-neutral-100 dark:focus-within:ring-neutral-100/10'
+            ? "border-red-500 focus-within:ring-red-500/10 dark:border-red-500"
+            : "border-neutral-300 focus-within:border-neutral-900 focus-within:ring-neutral-900/10 dark:border-neutral-700 dark:focus-within:border-neutral-100 dark:focus-within:ring-neutral-100/10"
         }`}
       >
         <input
           ref={inputRef}
           id={inputId}
-          type={visible ? 'text' : 'password'}
+          type={visible ? "text" : "password"}
           value={value}
           onChange={(event) => onChange(event.target.value)}
           placeholder="JBSWY3DPEHPK3PXP"
@@ -57,8 +57,8 @@ export function SecretInput({ value, onChange, error }: SecretInputProps) {
             type="button"
             className={iconButtonClasses}
             onClick={() => {
-              onChange('')
-              inputRef.current?.focus()
+              onChange("");
+              inputRef.current?.focus();
             }}
             aria-label="Clear secret key"
           >
@@ -79,7 +79,7 @@ export function SecretInput({ value, onChange, error }: SecretInputProps) {
           type="button"
           className={iconButtonClasses}
           onClick={() => setVisible((current) => !current)}
-          aria-label={visible ? 'Hide secret key' : 'Show secret key'}
+          aria-label={visible ? "Hide secret key" : "Show secret key"}
           aria-pressed={visible}
         >
           {visible ? (
@@ -113,13 +113,13 @@ export function SecretInput({ value, onChange, error }: SecretInputProps) {
         id={descriptionId}
         className={`mt-2 text-xs ${
           error
-            ? 'text-red-600 dark:text-red-400'
-            : 'text-neutral-500 dark:text-neutral-400'
+            ? "text-red-600 dark:text-red-400"
+            : "text-neutral-500 dark:text-neutral-400"
         }`}
-        role={error ? 'alert' : undefined}
+        role={error ? "alert" : undefined}
       >
-        {error ?? 'Use the setup key from your provider’s two-factor settings.'}
+        {error ?? "Use the setup key from your provider’s two-factor settings."}
       </p>
     </div>
-  )
+  );
 }

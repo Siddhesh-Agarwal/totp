@@ -1,10 +1,10 @@
 // @vitest-environment jsdom
-import { cleanup, render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { afterEach, describe, expect, it } from 'vitest'
-import { CodeDisplay } from './CodeDisplay'
+import { cleanup, render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { afterEach, describe, expect, it } from "vitest";
+import { CodeDisplay } from "./CodeDisplay";
 
-afterEach(cleanup)
+afterEach(cleanup);
 
 function renderDisplay() {
   return render(
@@ -17,30 +17,32 @@ function renderDisplay() {
       isWarning={false}
       isCritical={false}
     />,
-  )
+  );
 }
 
-describe('CodeDisplay', () => {
-  it('copies the current code when the digits are tapped', async () => {
-    const user = userEvent.setup()
-    renderDisplay()
+describe("CodeDisplay", () => {
+  it("copies the current code when the digits are tapped", async () => {
+    const user = userEvent.setup();
+    renderDisplay();
 
-    await user.click(screen.getByRole('button', { name: /copy current code/i }))
+    await user.click(
+      screen.getByRole("button", { name: /copy current code/i }),
+    );
 
-    await expect(navigator.clipboard.readText()).resolves.toBe('123456')
-  })
+    await expect(navigator.clipboard.readText()).resolves.toBe("123456");
+  });
 
-  it('shows the next code alongside the current code', () => {
-    renderDisplay()
+  it("shows the next code alongside the current code", () => {
+    renderDisplay();
 
     expect(
-      screen.getByRole('group', { name: 'Next code 6 5 4 3 2 1' }),
-    ).toBeTruthy()
-  })
+      screen.getByRole("group", { name: "Next code 6 5 4 3 2 1" }),
+    ).toBeTruthy();
+  });
 
-  it('offers a tap-to-copy hint', () => {
-    renderDisplay()
+  it("offers a tap-to-copy hint", () => {
+    renderDisplay();
 
-    expect(screen.getByText('Tap to copy')).toBeTruthy()
-  })
-})
+    expect(screen.getByText("Tap to copy")).toBeTruthy();
+  });
+});

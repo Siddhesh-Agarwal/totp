@@ -1,12 +1,17 @@
-import { generateCode, getCounter, getRemainingMs, type TotpOptions } from './totp'
+import {
+  generateCode,
+  getCounter,
+  getRemainingMs,
+  type TotpOptions,
+} from "./totp";
 
 export interface ClockState {
-  code: string | null
-  nextCode: string | null
-  secondsLeft: number
-  progress: number
-  isWarning: boolean
-  isCritical: boolean
+  code: string | null;
+  nextCode: string | null;
+  secondsLeft: number;
+  progress: number;
+  isWarning: boolean;
+  isCritical: boolean;
 }
 
 export function computeClock(
@@ -14,9 +19,9 @@ export function computeClock(
   options: TotpOptions,
   timestamp: number,
 ): ClockState {
-  const remainingMs = getRemainingMs(timestamp, options.period)
-  const secondsLeft = Math.ceil(remainingMs / 1000)
-  const counter = getCounter(timestamp, options.period)
+  const remainingMs = getRemainingMs(timestamp, options.period);
+  const secondsLeft = Math.ceil(remainingMs / 1000);
+  const counter = getCounter(timestamp, options.period);
 
   return {
     code: secret
@@ -29,5 +34,5 @@ export function computeClock(
     progress: remainingMs / (options.period * 1000),
     isWarning: secondsLeft <= 10,
     isCritical: secondsLeft <= 5,
-  }
+  };
 }

@@ -1,33 +1,33 @@
-import { useId } from 'react'
+import { useId } from "react";
 import {
   ALGORITHMS,
+  type Algorithm,
   DEFAULT_OPTIONS,
   DIGITS,
   PERIODS,
-  type Algorithm,
   type TotpOptions,
-} from '../lib/totp'
+} from "../lib/totp";
 
 const ALGORITHM_LABELS: Record<Algorithm, string> = {
-  SHA1: 'SHA-1',
-  SHA256: 'SHA-256',
-  SHA512: 'SHA-512',
-}
+  SHA1: "SHA-1",
+  SHA256: "SHA-256",
+  SHA512: "SHA-512",
+};
 
 interface AdvancedOptionsProps {
-  options: TotpOptions
-  onChange: (options: TotpOptions) => void
+  options: TotpOptions;
+  onChange: (options: TotpOptions) => void;
 }
 
 export function AdvancedOptions({ options, onChange }: AdvancedOptionsProps) {
-  const groupPrefix = useId()
+  const groupPrefix = useId();
 
   const update = <Key extends keyof TotpOptions>(
     key: Key,
     value: TotpOptions[Key],
   ) => {
-    onChange({ ...options, [key]: value })
-  }
+    onChange({ ...options, [key]: value });
+  };
 
   return (
     <details className="group border-t border-neutral-200 pt-4 dark:border-neutral-800">
@@ -44,7 +44,7 @@ export function AdvancedOptions({ options, onChange }: AdvancedOptionsProps) {
         </svg>
         <span>Advanced options</span>
         <span className="ml-auto whitespace-nowrap font-mono text-[10px] font-normal tracking-[0.04em] text-neutral-400 dark:text-neutral-500">
-          {options.digits} digits · {options.period}s ·{' '}
+          {options.digits} digits · {options.period}s ·{" "}
           {ALGORITHM_LABELS[options.algorithm]}
         </span>
       </summary>
@@ -63,7 +63,7 @@ export function AdvancedOptions({ options, onChange }: AdvancedOptionsProps) {
                     name={`${groupPrefix}-digits`}
                     value={digits}
                     checked={options.digits === digits}
-                    onChange={() => update('digits', digits)}
+                    onChange={() => update("digits", digits)}
                     className="peer sr-only"
                   />
                   <span className="flex min-h-11 cursor-pointer items-center justify-center rounded-md px-2 font-mono text-xs text-neutral-600 transition-colors peer-checked:bg-white peer-checked:text-neutral-900 peer-checked:shadow-sm peer-focus-visible:ring-2 peer-focus-visible:ring-neutral-900 dark:text-neutral-400 dark:peer-checked:bg-neutral-800 dark:peer-checked:text-neutral-100 dark:peer-focus-visible:ring-neutral-100">
@@ -86,7 +86,7 @@ export function AdvancedOptions({ options, onChange }: AdvancedOptionsProps) {
                     name={`${groupPrefix}-period`}
                     value={period}
                     checked={options.period === period}
-                    onChange={() => update('period', period)}
+                    onChange={() => update("period", period)}
                     className="peer sr-only"
                   />
                   <span className="flex min-h-11 cursor-pointer items-center justify-center rounded-md px-2 font-mono text-xs text-neutral-600 transition-colors peer-checked:bg-white peer-checked:text-neutral-900 peer-checked:shadow-sm peer-focus-visible:ring-2 peer-focus-visible:ring-neutral-900 dark:text-neutral-400 dark:peer-checked:bg-neutral-800 dark:peer-checked:text-neutral-100 dark:peer-focus-visible:ring-neutral-100">
@@ -109,7 +109,7 @@ export function AdvancedOptions({ options, onChange }: AdvancedOptionsProps) {
                     name={`${groupPrefix}-algorithm`}
                     value={algorithm}
                     checked={options.algorithm === algorithm}
-                    onChange={() => update('algorithm', algorithm)}
+                    onChange={() => update("algorithm", algorithm)}
                     className="peer sr-only"
                   />
                   <span className="flex min-h-11 cursor-pointer items-center justify-center rounded-md px-2 font-mono text-xs text-neutral-600 transition-colors peer-checked:bg-white peer-checked:text-neutral-900 peer-checked:shadow-sm peer-focus-visible:ring-2 peer-focus-visible:ring-neutral-900 dark:text-neutral-400 dark:peer-checked:bg-neutral-800 dark:peer-checked:text-neutral-100 dark:peer-focus-visible:ring-neutral-100">
@@ -136,5 +136,5 @@ export function AdvancedOptions({ options, onChange }: AdvancedOptionsProps) {
         </div>
       </div>
     </details>
-  )
+  );
 }

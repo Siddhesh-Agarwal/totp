@@ -1,20 +1,20 @@
-import { useEffect, useState } from 'react'
-import { AdvancedOptions } from './components/AdvancedOptions'
-import { CodeDisplay } from './components/CodeDisplay'
-import { SecretInput } from './components/SecretInput'
-import { useTotpClock } from './hooks/useTotpClock'
-import { loadStoredOptions, saveStoredOptions } from './lib/preferences'
-import { normalizeSecret, type TotpOptions } from './lib/totp'
+import { useEffect, useState } from "react";
+import { AdvancedOptions } from "./components/AdvancedOptions";
+import { CodeDisplay } from "./components/CodeDisplay";
+import { SecretInput } from "./components/SecretInput";
+import { useTotpClock } from "./hooks/useTotpClock";
+import { loadStoredOptions, saveStoredOptions } from "./lib/preferences";
+import { normalizeSecret, type TotpOptions } from "./lib/totp";
 
 function App() {
-  const [secretInput, setSecretInput] = useState('')
-  const [options, setOptions] = useState<TotpOptions>(loadStoredOptions)
-  const secret = normalizeSecret(secretInput)
-  const clock = useTotpClock(secret.normalized, options)
+  const [secretInput, setSecretInput] = useState("");
+  const [options, setOptions] = useState<TotpOptions>(loadStoredOptions);
+  const secret = normalizeSecret(secretInput);
+  const clock = useTotpClock(secret.normalized, options);
 
   useEffect(() => {
-    saveStoredOptions(options)
-  }, [options])
+    saveStoredOptions(options);
+  }, [options]);
 
   return (
     <div className="min-h-svh bg-white text-neutral-900 antialiased dark:bg-neutral-950 dark:text-neutral-100">
@@ -81,7 +81,7 @@ function App() {
         </footer>
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

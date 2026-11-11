@@ -1,37 +1,20 @@
-import { useEffect, useRef, useState } from 'react'
-import { formatCode, type Digits } from '../lib/totp'
+import { useEffect, useRef, useState } from "react";
+import { type Digits, formatCode } from "../lib/totp";
 
 interface CodeDisplayProps {
-  code: string | null
-  nextCode: string | null
-  digits: Digits
-  secondsLeft: number
-  progress: number
-  isWarning: boolean
-  isCritical: boolean
+  code: string | null;
+  nextCode: string | null;
+  digits: Digits;
+  secondsLeft: number;
+  progress: number;
+  isWarning: boolean;
+  isCritical: boolean;
 }
 
-type CopyStatus = 'idle' | 'copied' | 'failed'
+type CopyStatus = "idle" | "copied" | "failed";
 
-const RING_RADIUS = 24
-const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS
-
-function fallbackCopy(text: string): boolean {
-  const textarea = document.createElement('textarea')
-  textarea.value = text
-  textarea.className = 'fixed left-0 top-0 h-px w-px opacity-0 pointer-events-none'
-  textarea.setAttribute('readonly', '')
-  document.body.appendChild(textarea)
-  textarea.select()
-
-  try {
-    return document.execCommand('copy')
-  } catch {
-    return false
-  } finally {
-    document.body.removeChild(textarea)
-  }
-}
+const RING_RADIUS = 24;
+const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
 
 function CountdownRing({
   secondsLeft,
@@ -40,29 +23,29 @@ function CountdownRing({
   isCritical,
   isIdle,
 }: {
-  secondsLeft: number
-  progress: number
-  isWarning: boolean
-  isCritical: boolean
-  isIdle: boolean
+  secondsLeft: number;
+  progress: number;
+  isWarning: boolean;
+  isCritical: boolean;
+  isIdle: boolean;
 }) {
   const offset = isIdle
     ? RING_CIRCUMFERENCE
-    : RING_CIRCUMFERENCE * (1 - progress)
+    : RING_CIRCUMFERENCE * (1 - progress);
   const ringColor = isIdle
-    ? 'stroke-neutral-300 dark:stroke-neutral-700'
+    ? "stroke-neutral-300 dark:stroke-neutral-700"
     : isCritical
-      ? 'stroke-red-500 dark:stroke-red-400'
+      ? "stroke-red-500 dark:stroke-red-400"
       : isWarning
-        ? 'stroke-amber-500 dark:stroke-amber-400'
-        : 'stroke-emerald-500 dark:stroke-emerald-400'
+        ? "stroke-amber-500 dark:stroke-amber-400"
+        : "stroke-emerald-500 dark:stroke-emerald-400";
   const valueColor = isIdle
-    ? 'text-neutral-400 dark:text-neutral-600'
+    ? "text-neutral-400 dark:text-neutral-600"
     : isCritical
-      ? 'text-red-600 dark:text-red-400'
+      ? "text-red-600 dark:text-red-400"
       : isWarning
-        ? 'text-amber-600 dark:text-amber-400'
-        : 'text-neutral-900 dark:text-neutral-100'
+        ? "text-amber-600 dark:text-amber-400"
+        : "text-neutral-900 dark:text-neutral-100";
 
   return (
     <div className="relative size-14 shrink-0 sm:size-16" aria-hidden="true">
@@ -91,14 +74,14 @@ function CountdownRing({
         <span
           className={`font-mono text-sm font-medium tabular-nums ${valueColor}`}
         >
-          {isIdle ? '--' : secondsLeft}
+          {isIdle ? "--" : secondsLeft}
         </span>
         <span className="font-mono text-[8px] uppercase tracking-[0.18em] text-neutral-400 dark:text-neutral-500">
           sec
         </span>
       </div>
     </div>
-  )
+  );
 }
 
 export function CodeDisplay({
@@ -110,52 +93,49 @@ export function CodeDisplay({
   isWarning,
   isCritical,
 }: CodeDisplayProps) {
-  const [copyStatus, setCopyStatus] = useState<CopyStatus>('idle')
-  const resetTimer = useRef<number | null>(null)
-  const isIdle = code === null
-  const displayCode = code ?? '•'.repeat(digits)
-  const displayNextCode = nextCode ?? '•'.repeat(digits)
+  const [copyStatus, setCopyStatus] = useState<CopyStatus>("idle");
+  const resetTimer = useRef<number | null>(null);
+  const isIdle = code === null;
+  const displayCode = code ?? "•".repeat(digits);
+  const displayNextCode = nextCode ?? "•".repeat(digits);
 
   const statusColor = isIdle
-    ? 'text-neutral-400 dark:text-neutral-500'
+    ? "text-neutral-400 dark:text-neutral-500"
     : isCritical
-      ? 'text-red-600 dark:text-red-400'
+      ? "text-red-600 dark:text-red-400"
       : isWarning
-        ? 'text-amber-600 dark:text-amber-400'
-        : 'text-neutral-500 dark:text-neutral-400'
+        ? "text-amber-600 dark:text-amber-400"
+        : "text-neutral-500 dark:text-neutral-400";
 
   useEffect(
     () => () => {
       if (resetTimer.current !== null) {
-        window.clearTimeout(resetTimer.current)
+        window.clearTimeout(resetTimer.current);
       }
     },
     [],
-  )
+  );
 
   const showStatus = (status: CopyStatus) => {
-    setCopyStatus(status)
+    setCopyStatus(status);
     if (resetTimer.current !== null) {
-      window.clearTimeout(resetTimer.current)
+      window.clearTimeout(resetTimer.current);
     }
-    resetTimer.current = window.setTimeout(() => setCopyStatus('idle'), 1_800)
-  }
+    resetTimer.current = window.setTimeout(() => setCopyStatus("idle"), 1_800);
+  };
 
   const copyCode = async () => {
     if (code === null) {
-      return
+      return;
     }
 
-    try {
-      if (!navigator.clipboard) {
-        throw new Error('Clipboard API unavailable')
-      }
-      await navigator.clipboard.writeText(code)
-      showStatus('copied')
-    } catch {
-      showStatus(fallbackCopy(code) ? 'copied' : 'failed')
+    if (navigator.clipboard) {
+      await navigator.clipboard.writeText(code);
+      showStatus("copied");
+    } else {
+      showStatus("failed");
     }
-  }
+  };
 
   return (
     <div className="border-t border-neutral-200 pt-6 dark:border-neutral-800">
@@ -171,22 +151,22 @@ export function CodeDisplay({
           disabled={isIdle}
           aria-label={
             code === null
-              ? 'Current code unavailable'
-              : `Copy current code ${code.split('').join(' ')}`
+              ? "Current code unavailable"
+              : `Copy current code ${code.split("").join(" ")}`
           }
         >
           <span
             className={`block whitespace-nowrap font-mono text-4xl font-medium leading-none tracking-[0.03em] tabular-nums sm:text-6xl ${
               isIdle
-                ? 'text-neutral-300 dark:text-neutral-700'
-                : 'text-neutral-900 dark:text-neutral-50'
+                ? "text-neutral-300 dark:text-neutral-700"
+                : "text-neutral-900 dark:text-neutral-50"
             }`}
             aria-hidden="true"
           >
             {formatCode(displayCode)}
           </span>
           <span className="sr-only">
-            {code === null ? 'No code generated yet.' : `Current code: ${code}`}
+            {code === null ? "No code generated yet." : `Current code: ${code}`}
           </span>
         </button>
 
@@ -204,8 +184,8 @@ export function CodeDisplay({
         role="group"
         aria-label={
           nextCode === null
-            ? 'Next code unavailable'
-            : `Next code ${nextCode.split('').join(' ')}`
+            ? "Next code unavailable"
+            : `Next code ${nextCode.split("").join(" ")}`
         }
       >
         <span
@@ -218,8 +198,8 @@ export function CodeDisplay({
           aria-hidden="true"
           className={`font-mono text-base tabular-nums ${
             isIdle
-              ? 'text-neutral-300 dark:text-neutral-700'
-              : 'text-neutral-500 dark:text-neutral-400'
+              ? "text-neutral-300 dark:text-neutral-700"
+              : "text-neutral-500 dark:text-neutral-400"
           }`}
         >
           {formatCode(displayNextCode)}
@@ -231,18 +211,18 @@ export function CodeDisplay({
           <p
             aria-hidden="true"
             className={`font-mono text-[10px] uppercase tracking-[0.08em] sm:hidden ${
-              copyStatus === 'copied'
-                ? 'text-emerald-600 dark:text-emerald-400'
-                : copyStatus === 'failed'
-                  ? 'text-red-600 dark:text-red-400'
-                  : 'text-neutral-500 dark:text-neutral-400'
+              copyStatus === "copied"
+                ? "text-emerald-600 dark:text-emerald-400"
+                : copyStatus === "failed"
+                  ? "text-red-600 dark:text-red-400"
+                  : "text-neutral-500 dark:text-neutral-400"
             }`}
           >
-            {copyStatus === 'copied'
-              ? 'Copied'
-              : copyStatus === 'failed'
-                ? 'Copy failed'
-                : 'Tap to copy'}
+            {copyStatus === "copied"
+              ? "Copied"
+              : copyStatus === "failed"
+                ? "Copy failed"
+                : "Tap to copy"}
           </p>
         )}
 
@@ -252,7 +232,7 @@ export function CodeDisplay({
           onClick={copyCode}
           disabled={isIdle}
         >
-          {copyStatus === 'copied' ? (
+          {copyStatus === "copied" ? (
             <svg
               viewBox="0 0 24 24"
               aria-hidden="true"
@@ -276,27 +256,27 @@ export function CodeDisplay({
               <path d="M16 8V6a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2h2" />
             </svg>
           )}
-          {copyStatus === 'copied'
-            ? 'Copied'
-            : copyStatus === 'failed'
-              ? 'Copy failed'
-              : 'Copy code'}
+          {copyStatus === "copied"
+            ? "Copied"
+            : copyStatus === "failed"
+              ? "Copy failed"
+              : "Copy code"}
         </button>
 
         <p
           className={`font-mono text-[10px] uppercase tracking-[0.08em] ${statusColor}`}
         >
-          {isIdle ? 'Waiting for a secret' : `Refreshes in ${secondsLeft}s`}
+          {isIdle ? "Waiting for a secret" : `Refreshes in ${secondsLeft}s`}
         </p>
       </div>
 
       <span className="sr-only" role="status" aria-live="polite">
-        {copyStatus === 'copied'
-          ? 'Code copied to clipboard.'
-          : copyStatus === 'failed'
-            ? 'Copy failed. Select the code and copy it manually.'
-            : ''}
+        {copyStatus === "copied"
+          ? "Code copied to clipboard."
+          : copyStatus === "failed"
+            ? "Copy failed. Select the code and copy it manually."
+            : ""}
       </span>
     </div>
-  )
+  );
 }
