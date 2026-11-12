@@ -11,7 +11,7 @@
     <title>TOTP Generator — Free Two-Factor Codes in Your Browser</title>
     <meta
       name="description"
-      content="Generate time-based one-time passwords (TOTP) in your browser. Paste a Base32 secret and choose digits, time interval, and SHA algorithm. Nothing leaves your device."
+      content="Generate time-based one-time passwords in your browser. Paste a Base32 secret and choose digits, interval, and SHA algorithm. Nothing leaves your device."
     />
     <meta name="application-name" content="TOTP Generator" />
     <meta name="apple-mobile-web-app-title" content="TOTP Generator" />
@@ -19,10 +19,9 @@
     <meta name="color-scheme" content="light dark" />
     <meta name="referrer" content="no-referrer" />
     <meta name="format-detection" content="telephone=no" />
-    <meta name="robots" content="index, follow" />
     <meta
-      name="keywords"
-      content="TOTP generator, two-factor authentication, 2FA, one-time password, RFC 6238"
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
     />
     <link rel="canonical" href="https://totp.siddhesh.cc/" />
     <meta name="theme-color" content="#ffffff" />
@@ -69,7 +68,11 @@
         "author": {
           "@type": "Person",
           "name": "Siddhesh Agarwal",
-          "sameAs": ["https://x.com/siddheshdotcc"]
+          "url": "https://siddhesh.cc/",
+          "sameAs": [
+            "https://x.com/siddheshdotcc",
+            "https://github.com/Siddhesh-Agarwal"
+          ]
         },
         "offers": {
           "@type": "Offer",
@@ -87,7 +90,59 @@
     </script>
   </head>
   <body class="bg-white dark:bg-neutral-950">
-    <div id="root"></div>
+    <!--
+      Static fallback for crawlers and no-JS visitors. React clears this when
+      it mounts; keep the heading and intro in sync with src/App.tsx.
+    -->
+    <div id="root">
+      <div
+        class="min-h-svh bg-white text-neutral-900 antialiased dark:bg-neutral-950 dark:text-neutral-100"
+      >
+        <div
+          class="mx-auto flex min-h-svh w-full max-w-xl flex-col px-5 py-6 sm:px-6 sm:py-10"
+        >
+          <header
+            class="flex flex-wrap items-center justify-between gap-3 border-b border-neutral-200 pb-5 dark:border-neutral-800"
+          >
+            <h1
+              class="font-mono text-sm font-semibold uppercase tracking-[0.18em]"
+            >
+              TOTP Generator
+            </h1>
+          </header>
+          <main class="flex-1 py-10 sm:py-14">
+            <p
+              class="max-w-md text-sm leading-relaxed text-neutral-500 dark:text-neutral-400"
+            >
+              Paste a Base32 setup key. The current code refreshes on its own.
+            </p>
+          </main>
+          <footer
+            class="flex flex-wrap items-center justify-between gap-2 border-t border-neutral-200 pt-4 font-mono text-[10px] uppercase tracking-[0.12em] text-neutral-400 dark:border-neutral-800 dark:text-neutral-500"
+          >
+            <a
+              href="https://www.rfc-editor.org/info/rfc6238/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              RFC 6238
+            </a>
+            <p>
+              Made for humans by
+              <a
+                href="https://siddhesh.cc/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="rounded-sm underline decoration-neutral-300 underline-offset-4 transition-colors hover:text-neutral-900 hover:decoration-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 dark:decoration-neutral-700 dark:hover:text-neutral-100 dark:hover:decoration-neutral-400 dark:focus-visible:ring-neutral-100"
+              >
+                Siddhesh Agarwal
+              </a>
+            </p>
+            <p>Secrets stay in this tab</p>
+          </footer>
+        </div>
+      </div>
+    </div>
     <noscript>
       This TOTP generator needs JavaScript to create codes locally in your
       browser.

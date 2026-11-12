@@ -77,6 +77,17 @@ function App() {
           >
             RFC 6238
           </a>
+          <p>
+            Made for humans by{" "}
+            <a
+              href="https://siddhesh.cc/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-sm underline decoration-neutral-300 underline-offset-4 transition-colors hover:text-neutral-900 hover:decoration-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 dark:decoration-neutral-700 dark:hover:text-neutral-100 dark:hover:decoration-neutral-400 dark:focus-visible:ring-neutral-100"
+            >
+              Siddhesh Agarwal
+            </a>
+          </p>
           <p>Secrets stay in this tab</p>
         </footer>
       </div>
