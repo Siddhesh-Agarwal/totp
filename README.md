@@ -1,7 +1,8 @@
 # TOTP Generator
 
-A browser-only time-based one-time password (TOTP) generator, deployed at
-[totp.siddhesh.cc](https://totp.siddhesh.cc/).
+**Live site:** [totp.siddhesh.cc](https://totp.siddhesh.cc/)
+
+A browser-only time-based one-time password (TOTP) generator.
 
 Paste a Base32 setup key and the current RFC 6238 code appears immediately. The
 code refreshes on its own with a visible countdown, and the next code is shown
@@ -36,7 +37,7 @@ Cloudflare Pages settings:
 
 - Build command: `pnpm build`
 - Build output directory: `dist`
-- Custom domain: `totp.siddhesh.cc`
+- Custom domain: [totp.siddhesh.cc](https://totp.siddhesh.cc/)
 
 `public/_headers` contains the production security headers (CSP, HSTS, referrer
 policy, permissions policy, and asset caching) and is copied into the build
